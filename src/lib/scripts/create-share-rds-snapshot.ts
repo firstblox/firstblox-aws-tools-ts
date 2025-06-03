@@ -8,18 +8,45 @@ import {
 import { fromEnv } from "@aws-sdk/credential-provider-env";
 import { Command } from "commander";
 import cliProgress from "cli-progress";
+import inquirer from "inquirer";
 
 const program = new Command();
 program
   .name('create-rds-snapshot')
   .description('Create an RDS snapshot in a target region and share it with a specific AWS account')
-  .requiredOption('--region <region>', 'Target AWS region')
-  .requiredOption('--db-identifier <id>', 'RDS database identifier')
-  .requiredOption('--share-account <account>', 'AWS Account ID to share the snapshot with')
+  .option('--region <region>', 'Target AWS region')
+  .option('--db-identifier <id>', 'RDS database identifier')
+  .option('--share-account <account>', 'AWS Account ID to share the snapshot with')
   .option('--dry-run', 'Show what would be done without making changes')
   .parse(process.argv);
 
 const options = program.opts();
+
+async function promptForMissingOptions(opts: any) {
+  const questions = [];
+  if (!opts.region) {
+    questions.push({ type: "input", name: "region", message: "Enter AWS region:" });
+  }
+  if (!opts.dbIdentifier) {
+    questions.push({ type: "input", name: "dbIdentifier", message: "Enter RDS database identifier:" });
+  }
+  if (!opts.shareAccount) {
+    questions.push({ type: "input", name: "shareAccount", message: "Enter AWS Account ID to share with:" });
+  }
+  if (typeof opts.dryRun === 'undefined') {
+    questions.push({
+      type: "confirm",
+      name: "dryRun",
+      message: "Dry run? (Type 'yes' for dry run, 'no' to execute the operation)",
+      default: false
+    });
+  }
+  if (questions.length > 0) {
+    const answers = await inquirer.prompt(questions as any);
+    return { ...opts, ...answers };
+  }
+  return opts;
+}
 
 async function createRdsClient(region: string) {
   return new RDSClient({
@@ -28,7 +55,7 @@ async function createRdsClient(region: string) {
   });
 }
 
-async function main() {
+async function main(options: any) {
   const { region, dbIdentifier, shareAccount, dryRun } = {
     region: options.region,
     dbIdentifier: options.dbIdentifier,
@@ -106,7 +133,7 @@ async function main() {
   console.log(`✅ Snapshot "${snapshotId}" created and shared with account ${shareAccount} 🎉`);
 }
 
-main().catch(err => {
-  console.error("❌ Error:", err.message);
-  process.exit(1);
-});
+(async () => {
+  const filledOptions = await promptForMissingOptions(options);
+  await main(filledOptions);
+})();

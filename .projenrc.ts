@@ -1,5 +1,5 @@
 import { typescript } from 'projen';
-import { NodePackageManager } from 'projen/lib/javascript';
+import { NodePackageManager, UpgradeDependenciesSchedule } from 'projen/lib/javascript';
 
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
@@ -16,8 +16,14 @@ const project = new typescript.TypeScriptProject({
     '@aws-sdk/credential-provider-env',
     'cli-progress',
     'commander',
+    'inquirer',
   ],
   packageManager: NodePackageManager.PNPM,
+  depsUpgradeOptions: {
+    workflowOptions: {
+      schedule: UpgradeDependenciesSchedule.MONTHLY,
+    },
+  },
 });
 
 project.addScripts({
