@@ -18,7 +18,8 @@
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
-    "projen": "npx projen"
+    "projen": "npx projen",
+    "list-buckets": "tsx ./src/lib/scripts/list-buckets.ts"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2",
@@ -36,7 +37,14 @@
     "projen": "^0.92.9",
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iam": "^3.821.0",
+    "@aws-sdk/client-s3": "^3.821.0",
+    "@aws-sdk/credential-provider-env": "^3.821.0",
+    "commander": "^14.0.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
