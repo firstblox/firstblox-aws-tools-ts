@@ -1,8 +1,8 @@
 // src/scripts/generate-report.ts
 
-import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
-import { fromEnv } from "@aws-sdk/credential-provider-env";
-import { Command } from "commander";
+import { S3Client, ListBucketsCommand } from '@aws-sdk/client-s3';
+import { fromEnv } from '@aws-sdk/credential-provider-env';
+import { Command } from 'commander';
 
 const command = new ListBucketsCommand({});
 
@@ -34,4 +34,7 @@ program
   const client = await createS3Client();
   const response = await client.send(command);
   console.log(response);
-})();
+})().catch((err) => {
+  console.error('❌ Unhandled error:', err);
+  process.exit(1);
+});

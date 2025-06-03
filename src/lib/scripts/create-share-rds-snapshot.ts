@@ -4,11 +4,11 @@ import {
   DescribeDBInstancesCommand,
   ModifyDBSnapshotAttributeCommand,
   DescribeDBSnapshotsCommand,
-} from "@aws-sdk/client-rds";
-import { fromEnv } from "@aws-sdk/credential-provider-env";
-import { Command } from "commander";
-import cliProgress from "cli-progress";
-import inquirer from "inquirer";
+} from '@aws-sdk/client-rds';
+import { fromEnv } from '@aws-sdk/credential-provider-env';
+import cliProgress from 'cli-progress';
+import { Command } from 'commander';
+import inquirer from 'inquirer';
 
 const program = new Command();
 program
@@ -25,20 +25,20 @@ const options = program.opts();
 async function promptForMissingOptions(opts: any) {
   const questions = [];
   if (!opts.region) {
-    questions.push({ type: "input", name: "region", message: "Enter AWS region:" });
+    questions.push({ type: 'input', name: 'region', message: 'Enter AWS region:' });
   }
   if (!opts.dbIdentifier) {
-    questions.push({ type: "input", name: "dbIdentifier", message: "Enter RDS database identifier:" });
+    questions.push({ type: 'input', name: 'dbIdentifier', message: 'Enter RDS database identifier:' });
   }
   if (!opts.shareAccount) {
-    questions.push({ type: "input", name: "shareAccount", message: "Enter AWS Account ID to share with:" });
+    questions.push({ type: 'input', name: 'shareAccount', message: 'Enter AWS Account ID to share with:' });
   }
   if (typeof opts.dryRun === 'undefined') {
     questions.push({
-      type: "confirm",
-      name: "dryRun",
+      type: 'confirm',
+      name: 'dryRun',
       message: "Dry run? (Type 'yes' for dry run, 'no' to execute the operation)",
-      default: false
+      default: false,
     });
   }
   if (questions.length > 0) {
@@ -55,12 +55,12 @@ async function createRdsClient(region: string) {
   });
 }
 
-async function main(options: any) {
+async function main(opts: any) {
   const { region, dbIdentifier, shareAccount, dryRun } = {
-    region: options.region,
-    dbIdentifier: options.dbIdentifier,
-    shareAccount: options.shareAccount,
-    dryRun: !!options.dryRun,
+    region: opts.region,
+    dbIdentifier: opts.dbIdentifier,
+    shareAccount: opts.shareAccount,
+    dryRun: !!opts.dryRun,
   };
 
   const client = await createRdsClient(region);
@@ -71,14 +71,14 @@ async function main(options: any) {
   const instance = instanceData.DBInstances?.[0];
 
   if (!instance) {
-    console.error("❌ Could not find RDS database:", dbIdentifier);
+    console.error('❌ Could not find RDS database:', dbIdentifier);
     process.exit(1);
   }
 
   const snapshotId = `${dbIdentifier}-snapshot-${Date.now()}`;
 
   if (dryRun) {
-    console.log("📝 [Dry Run] Would create snapshot for:");
+    console.log('📝 [Dry Run] Would create snapshot for:');
     console.log(`   📦 Database: ${dbIdentifier}`);
     console.log(`   🌎 Region:   ${region}`);
     console.log(`   👤 Share with Account: ${shareAccount}`);
@@ -92,7 +92,7 @@ async function main(options: any) {
     format: 'Progress |{bar}| {percentage}% | {status}',
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
-    hideCursor: true
+    hideCursor: true,
   });
 
   progressBar.start(100, 0, { status: 'Starting...' });
@@ -115,7 +115,7 @@ async function main(options: any) {
       DBSnapshotIdentifier: snapshotId,
     }));
     const snap = snapResp.DBSnapshots?.[0];
-    if (snap?.Status === "available") {
+    if (snap?.Status === 'available') {
       available = true;
       progressBar.update(100, { status: 'Snapshot available!' });
     }
@@ -125,7 +125,7 @@ async function main(options: any) {
   progressBar.update(100, { status: 'Sharing snapshot...' });
   await client.send(new ModifyDBSnapshotAttributeCommand({
     DBSnapshotIdentifier: snapshotId,
-    AttributeName: "restore",
+    AttributeName: 'restore',
     ValuesToAdd: [shareAccount],
   }));
 
@@ -136,4 +136,7 @@ async function main(options: any) {
 (async () => {
   const filledOptions = await promptForMissingOptions(options);
   await main(filledOptions);
-})();
+})().catch((err) => {
+  console.error('❌ Unhandled error:', err);
+  process.exit(1);
+});

@@ -6,13 +6,13 @@ const project = new typescript.TypeScriptProject({
   name: 'firstblox-aws-tools-ts',
   projenrcTs: true,
   devDeps: [
-    "@types/cli-progress",
-    "tsx"
+    '@types/cli-progress',
+    'tsx',
   ],
   deps: [
     '@aws-sdk/client-iam',
     '@aws-sdk/client-rds',
-    "@aws-sdk/client-s3",
+    '@aws-sdk/client-s3',
     '@aws-sdk/credential-provider-env',
     'cli-progress',
     'commander',
@@ -27,8 +27,8 @@ const project = new typescript.TypeScriptProject({
 });
 
 project.addScripts({
-  "list-buckets": "tsx ./src/lib/scripts/list-buckets.ts",
-  "create-rds-snapshot": "tsx ./src/lib/scripts/create-share-rds-snapshot.ts",
+  'list-buckets': 'tsx ./src/lib/scripts/list-buckets.ts',
+  'create-rds-snapshot': 'tsx ./src/lib/scripts/create-share-rds-snapshot.ts',
 });
 
 project.synth();
