@@ -6,6 +6,10 @@
       "type": "build"
     },
     {
+      "name": "@types/cli-progress",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -80,11 +84,19 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-sdk/client-rds",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-sdk/client-s3",
       "type": "runtime"
     },
     {
       "name": "@aws-sdk/credential-provider-env",
+      "type": "runtime"
+    },
+    {
+      "name": "cli-progress",
       "type": "runtime"
     },
     {

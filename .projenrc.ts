@@ -1,20 +1,28 @@
 import { typescript } from 'projen';
+import { NodePackageManager } from 'projen/lib/javascript';
 
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'firstblox-aws-tools-ts',
   projenrcTs: true,
-  devDeps: ["tsx"],
+  devDeps: [
+    "@types/cli-progress",
+    "tsx"
+  ],
   deps: [
     '@aws-sdk/client-iam',
+    '@aws-sdk/client-rds',
     "@aws-sdk/client-s3",
     '@aws-sdk/credential-provider-env',
+    'cli-progress',
     'commander',
   ],
+  packageManager: NodePackageManager.PNPM,
 });
 
 project.addScripts({
   "list-buckets": "tsx ./src/lib/scripts/list-buckets.ts",
+  "create-rds-snapshot": "tsx ./src/lib/scripts/create-share-rds-snapshot.ts",
 });
 
 project.synth();
