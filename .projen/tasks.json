@@ -188,20 +188,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --updateSnapshot",
-          "receiveArgs": true
-        },
-        {
           "spawn": "eslint"
-        }
-      ]
-    },
-    "test:watch": {
-      "name": "test:watch",
-      "description": "Run jest in watch mode",
-      "steps": [
-        {
-          "exec": "jest --watch"
         }
       ]
     },
@@ -230,13 +217,13 @@
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/cli-progress,@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node,tsx,typescript,@aws-sdk/client-iam,@aws-sdk/client-rds,@aws-sdk/client-s3,@aws-sdk/credential-provider-env,cli-progress,commander,inquirer"
+          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/cli-progress,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,projen,ts-node,tsx,typescript,@aws-sdk/client-iam,@aws-sdk/client-rds,@aws-sdk/client-s3,@aws-sdk/credential-provider-env,cli-progress,commander,inquirer"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "pnpm update @stylistic/eslint-plugin @types/cli-progress @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest ts-node tsx typescript @aws-sdk/client-iam @aws-sdk/client-rds @aws-sdk/client-s3 @aws-sdk/credential-provider-env cli-progress commander inquirer"
+          "exec": "pnpm update @stylistic/eslint-plugin @types/cli-progress @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen ts-node tsx typescript @aws-sdk/client-iam @aws-sdk/client-rds @aws-sdk/client-s3 @aws-sdk/credential-provider-env cli-progress commander inquirer"
         },
         {
           "exec": "npx projen"

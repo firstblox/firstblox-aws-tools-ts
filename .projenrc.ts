@@ -5,6 +5,7 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'firstblox-aws-tools-ts',
   projenrcTs: true,
+  jest: false,
   devDeps: [
     '@types/cli-progress',
     'tsx',
@@ -39,15 +40,17 @@ project.github?.mergify?.addRule({
       type: 'APPROVE',
     },
     merge: {
-      method: "squash",
+      method: 'squash',
     },
   },
 });
 
+project.addBins({
+  'create-share-rds-snapshot': 'tsx ./src/bin/create-share-rds-snapshot.ts',
+});
 
 project.addScripts({
-  'list-buckets': 'tsx ./src/lib/scripts/list-buckets.ts',
-  'create-rds-snapshot': 'tsx ./src/lib/scripts/create-share-rds-snapshot.ts',
+  'create-share-rds-snapshot': 'node ./lib/bin/create-share-rds-snapshot.js',
 });
 
 project.synth();
