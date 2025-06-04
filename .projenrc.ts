@@ -19,6 +19,9 @@ const project = new typescript.TypeScriptProject({
     'commander',
     'inquirer',
   ],
+  release: true,
+  releaseToNpm: true,
+  npmRegistryUrl: 'https://npm.pkg.github.com',
   packageManager: NodePackageManager.PNPM,
   depsUpgradeOptions: {
     workflowOptions: {
