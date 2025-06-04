@@ -1,5 +1,5 @@
 {
-  "name": "firstblox-aws-tools-ts",
+  "name": "@firstblox/firstblox-aws-tools-ts",
   "bin": {
     "create-share-rds-snapshot": "tsx ./src/bin/create-share-rds-snapshot.ts"
   },
@@ -52,8 +52,7 @@
   "main": "lib/index.js",
   "license": "Apache-2.0",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "public"
+    "registry": "https://npm.pkg.github.com/"
   },
   "version": "0.0.0",
   "types": "lib/index.d.ts",

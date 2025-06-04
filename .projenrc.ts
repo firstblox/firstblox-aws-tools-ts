@@ -3,7 +3,7 @@ import { NodePackageManager, UpgradeDependenciesSchedule } from 'projen/lib/java
 
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: 'firstblox-aws-tools-ts',
+  name: '@firstblox/firstblox-aws-tools-ts',
   projenrcTs: true,
   jest: false,
   devDeps: [
@@ -29,6 +29,9 @@ const project = new typescript.TypeScriptProject({
     },
   },
 });
+
+project.npmrc.addConfig('@firstblox:registry', 'https://npm.pkg.github.com/');
+project.npmrc.addConfig('//npm.pkg.github.com/:_authToken', '${NPM_TOKEN}');
 
 project.github?.mergify?.addRule({
   name: 'Auto-merge Projen upgrade PRs',
