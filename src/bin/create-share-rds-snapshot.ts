@@ -24,6 +24,10 @@ program
 
 const options = program.opts();
 
+console.log();
+console.log(program.description());
+console.log();
+
 async function promptForMissingOptions(opts: any) {
   const questions = [];
   if (!opts.region) {
