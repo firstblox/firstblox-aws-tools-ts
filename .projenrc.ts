@@ -26,6 +26,25 @@ const project = new typescript.TypeScriptProject({
   },
 });
 
+project.github?.mergify?.addRule({
+  name: 'Auto-merge Projen upgrade PRs',
+  conditions: [
+    'author=github-actions[bot]',
+    'title~^chore\\(deps\\): upgrade dependencies',
+    'label=auto-approve',
+    'check-success=build',
+  ],
+  actions: {
+    review: {
+      type: 'APPROVE',
+    },
+    merge: {
+      method: "squash",
+    },
+  },
+});
+
+
 project.addScripts({
   'list-buckets': 'tsx ./src/lib/scripts/list-buckets.ts',
   'create-rds-snapshot': 'tsx ./src/lib/scripts/create-share-rds-snapshot.ts',
