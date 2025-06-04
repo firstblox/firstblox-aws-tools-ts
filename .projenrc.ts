@@ -51,12 +51,12 @@ project.github?.mergify?.addRule({
   },
 });
 
-project.addBins({
+project.addScripts({
   'create-share-rds-snapshot': 'tsx ./src/bin/create-share-rds-snapshot.ts',
 });
 
-project.addScripts({
-  'create-share-rds-snapshot': 'node ./lib/bin/create-share-rds-snapshot.js',
+project.addBins({
+  'create-share-rds-snapshot': 'lib/bin/create-share-rds-snapshot.js',
 });
 
 project.synth();

@@ -1,7 +1,7 @@
 {
   "name": "@firstblox/firstblox-aws-tools-ts",
   "bin": {
-    "create-share-rds-snapshot": "tsx ./src/bin/create-share-rds-snapshot.ts"
+    "create-share-rds-snapshot": "lib/bin/create-share-rds-snapshot.js"
   },
   "scripts": {
     "build": "npx projen build",
@@ -21,7 +21,7 @@
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
     "projen": "npx projen",
-    "create-share-rds-snapshot": "node ./lib/bin/create-share-rds-snapshot.js"
+    "create-share-rds-snapshot": "tsx ./src/bin/create-share-rds-snapshot.ts"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2",
