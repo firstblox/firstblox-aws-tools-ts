@@ -15,24 +15,12 @@ firstblox AWS tools - TypeScript
 
 ![Title](docs/images/title-card.png)
 
-> [!NOTE]
-> This codebase utilises some concepts and some reference code from the excellent series by Lee Gilmore on CDK pipelines best practices.
-> See part 1 [here](https://github.com/leegilmorecode/Serverless-AWS-CDK-Best-Practices-Patterns).
-> I highly recommend you checkout the whole series.
-
-> [!IMPORTANT]
-> This codebase is currently a reference repository ONLY.
-> Developers should customise to their environment and requirements.
-> See `src/config/index.ts` for all configurations
-
 **Whats included?**
 
 - Projen TS project scaffolding.
-- Commander to script options
+- Commander for script description and options
 - Inquirer for input propmpts
 - CLI feedback for command line loader feedback
-
-- Optional dynamic fetching of SSM stored aws account ids.
 
 **Pre-requisites**
 
@@ -42,7 +30,17 @@ firstblox AWS tools - TypeScript
 
 # Install
 
+## Package installation
+
+**If you have been granted access to the packaged version you can install as per the below command.**
+
+```bash
+npm install @firstblox/firstblox-aws-tools-ts
+```
+
 ## Initial installation
+
+**To begin development follow the below installation guidelines**
 
 Ensure pnpm is installed.
 
@@ -50,7 +48,7 @@ Ensure pnpm is installed.
 npm install -g pnpm
 ```
 
-Install dependencies.
+**Install dependencies.**
 
 ```bash
 pnpm i
@@ -87,7 +85,13 @@ npx projen
 
 ## Adding new scripts
 
-Add new scripts to [./src/lib/scripts](./src/lib/scripts/).
+Add new scripts to [./src/bin/scripts](./src/bin/scripts/).
+
+## Build
+
+```bash
+npx projen build
+```
 
 # Execution
 
@@ -107,8 +111,8 @@ npm run create-share-rds-snapshot
 
 **Create and Share RDS Snapshot output - DRY RUN**
 
-![Title](docs/images/title-card.png)
+![Title](docs/images/create-share-snapshot-dry-run.png)
 
 **Create and Share RDS Snapshot output**
 
-![Title](docs/images/title-card.png)
+![Title](docs/images/create-share-snapshot.png)
